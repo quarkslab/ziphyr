@@ -16,6 +16,8 @@ Ziphyr
 
 
 
+Ziphyr is an on-the-fly zipcrypto archiving applied on a streamed file source.
+
 
 * Free software: Apache Software License 2.0
 * Documentation: https://ziphyr.readthedocs.io.
@@ -25,6 +27,39 @@ Features
 
 * Streamed file turned into a streamed zip
 * zipcrypto applied on-the-fly on the stream
+
+Install
+-------
+
+To install Ziphyr, run this command in your terminal:
+
+.. code-block:: console
+
+    $ pip install ziphyr
+
+Usage
+-----
+
+.. code-block:: python
+
+   from ziphyr import Ziphyr
+
+   # init the Ziphyr object
+   z = Ziphyr(b'infected')
+
+   # prepare it for a specific file, from path or metadata directly
+   z.from_filepath(filepath)
+
+   # consume the generator to get the encrypted ziped chunk
+   for k in z.generator(source):
+       pass
+
+Test
+----
+
+.. code-block:: console
+
+   $ python -m unittest -v tests/*.py
 
 Credits and references
 ----------------------
