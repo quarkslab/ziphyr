@@ -25,6 +25,27 @@ def retro_from_file(filepath):
     return arcname, st.st_size
 
 
+class RetroZipInfo(ZipInfo):
+    """
+    Custom ZipInfo to provide a fake from_file to py35
+    """
+
+    @classmethod
+    def from_file(cls, filepath):
+        """Hack to handle the lack of from_file in py35"""
+        try:
+            return super().from_file(filepath)
+        except AttributeError:
+            zinfo = cls(filename=filepath)
+
+            arcname, st_size = retro_from_file(filepath)
+            zinfo.orig_filename = arcname
+            zinfo.filename = arcname
+            zinfo.file_size = st_size
+
+            return zinfo
+
+
 class _ZipWriteFile(io.BufferedIOBase):
     """ taken from python3.6 readapted for python3.5 """
     def __init__(self, zf, zinfo, zip64):

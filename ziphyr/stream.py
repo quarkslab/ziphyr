@@ -24,20 +24,22 @@ class ZiphyrStream(RawIOBase):
     Disclaimer: zipcrypto is known to be flawed.
     Adapted from Ivan Ergunov zipfile_generator.
     """
-    def __init__(self, password: bytes):
+    def __init__(self, password: bytes = None):
         """
-        Requires a bytes-type password parameter.
-        Initialize the crctable and keys for zipcrypto.
+        Optional bytes-type password parameter.
+        If provided, initialize the crctable and keys for zipcrypto.
         """
         self._buffer = b''
-        self.crctable = list(map(_gen_crc, range(256)))
 
-        self.x = 305419896  # PKZIP Key(0)
-        self.y = 591751049  # PKZIP Key(1)
-        self.z = 878082192  # PKZIP Key(2)
+        if password:
+            self.crctable = list(map(_gen_crc, range(256)))
 
-        for p in password:
-            self.update_keys(p)
+            self.x = 305419896  # PKZIP Key(0)
+            self.y = 591751049  # PKZIP Key(1)
+            self.z = 878082192  # PKZIP Key(2)
+
+            for p in password:
+                self.update_keys(p)
 
     def crc32(self, ch, crc):
         """

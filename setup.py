@@ -9,8 +9,8 @@ with open('README.md') as readme_file:
 
 setup(
     name='ziphyr',
-    version='0.1.0',
-    description="On-the-fly zipcrypto applied on streamed file source.",
+    version='0.2.0',
+    description="On-the-fly zip of streamed file with optional zipcrypto.",
     long_description=readme,
     long_description_content_type="text/markdown",
     url='https://github.com/quarkslab/ziphyr',
@@ -19,7 +19,8 @@ setup(
     license="Apache Software License 2.0",
     python_requires='>=3.5',
     classifiers=[
-        'Development Status :: 2 - Pre-Alpha',
+        'Development Status :: 3 - Alpha',
+        'Environment :: Web Environment',
         'Intended Audience :: Developers',
         'License :: OSI Approved :: Apache Software License',
         'Natural Language :: English',
@@ -31,7 +32,7 @@ setup(
     ],
     install_requires=[],
     include_package_data=True,
-    keywords='ziphyr',
+    keywords='zip stream crypto ziphyr',
     packages=['ziphyr'],
     setup_requires=[],
     test_suite='tests',

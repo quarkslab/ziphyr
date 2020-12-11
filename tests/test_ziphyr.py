@@ -9,20 +9,36 @@ from unittest.mock import patch
 from zipfile import ZipFile
 
 import ziphyr.ziphyr as module
-from ziphyr.retro import RetroZipFile
+from ziphyr.retro import RetroZipFile, RetroZipInfo
 from ziphyr.utils import file_iterable
 
 
 class TestZiphyr(unittest.TestCase):
     def test__init__(self):
         """Test Ziphyr object init."""
+        z = module.Ziphyr()
+
+        self.assertEqual(z.password, None)
+        self.assertEqual(z.stream, None)
+        self.assertTrue(
+            issubclass(z.ZipInfo, RetroZipInfo),
+            msg="Ziphyr.ZipInfo is not a subclass of RetroZipInfo",
+        )
+        self.assertFalse(
+            issubclass(z.ZipInfo, module.PKCryptoZipInfo),
+            msg="Ziphyr.ZipInfo is a subclass of PKCryptoZipInfo",
+        )
+
         _password = b'password'
 
         z = module.Ziphyr(_password)
 
         self.assertEqual(z.password, _password)
         self.assertEqual(z.stream, None)
-        self.assertEqual(z.stream, None)
+        self.assertTrue(
+            issubclass(z.ZipInfo, module.PKCryptoZipInfo),
+            msg="Ziphyr.ZipInfo is not a subclass of RetroZipInfo",
+        )
 
     @patch('platform.sys.version_info', autospec=True)
     def test_35_behavior(self, m_version_info):

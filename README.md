@@ -1,17 +1,19 @@
 # Ziphyr
 
+Ziphyr is an on-the-fly zip archiving applied on a streamed file source, with optional on-the-fly encryption.
+
 ![GitHub](https://img.shields.io/github/license/quarkslab/ziphyr)
 ![GitHub Workflow Status (branch)](https://img.shields.io/github/workflow/status/quarkslab/ziphyr/Python%20Tox/master)
 ![PyPI](https://img.shields.io/pypi/v/ziphyr)
 ![PyPI - Python Version](https://img.shields.io/pypi/pyversions/ziphyr)
 
-Ziphyr is an on-the-fly zipcrypto archiving applied on a streamed file source. Disclaimer: *the zip-native cryptography is unsecure*.
-
 ## Features
 
+* Disclaimer: *the zip-native cryptography is unsecure*
 * Streamed file turned into a streamed zip
-* zipcrypto applied on-the-fly on the stream
-* retro-compatibility for py35 with writable ZipInfo port
+* Can be used password-less for a non-encrypted zip stream
+* Or with a password to apply on-the-fly zipcrypto to the stream
+* Retro-compatibility for py35 with writable ZipInfo port
 
 ## Install
 
@@ -26,6 +28,7 @@ Ziphyr is an on-the-fly zipcrypto archiving applied on a streamed file source. D
 
    # init the Ziphyr object
    z = Ziphyr(b'infected')
+   # z = Ziphyr() for crypto-less usage
 
    # prepare it for a specific file, from path or metadata directly
    z.from_filepath(filepath)

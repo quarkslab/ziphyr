@@ -1,8 +1,13 @@
 ## Features
-* Streamed file turned into a streamed zip
-* zipcrypto applied on-the-fly on the stream
-* retro-compatibility for py35 with writable ZipInfo port
 * Disclaimer: the zip-native cryptography is unsecure
+* Streamed file turned into a streamed zip
+* Optional zipcrypto applied on-the-fly on the stream
+* Retro-compatibility for py35 with writable ZipInfo port
+
+![GitHub](https://img.shields.io/github/license/quarkslab/ziphyr)
+![GitHub Workflow Status (branch)](https://img.shields.io/github/workflow/status/quarkslab/ziphyr/Python%20Tox/master)
+![PyPI](https://img.shields.io/pypi/v/ziphyr)
+![PyPI - Python Version](https://img.shields.io/pypi/pyversions/ziphyr)
 
 ## Package
 
@@ -19,6 +24,7 @@
 
    # init the Ziphyr object
    z = Ziphyr(b'infected')
+   # z = Ziphyr() for crypto-less usage
 
    # prepare it for a specific file
    # from path or metadata directly
@@ -49,6 +55,7 @@ ziphyr
 ├── retro
 │   ├── RetroZipFile
 │   ├── _ZipWriteFile
+│   ├── RetroZipInfo
 │   └── retro_from_file
 └── utils
     └── file_iterable
