@@ -2,6 +2,7 @@
 * Streamed file turned into a streamed zip
 * zipcrypto applied on-the-fly on the stream
 * retro-compatibility for py35 with writable ZipInfo port
+* Disclaimer: the zip-native cryptography is unsecure
 
 ## Package
 

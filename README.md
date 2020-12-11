@@ -5,7 +5,7 @@
 ![PyPI](https://img.shields.io/pypi/v/ziphyr)
 ![PyPI - Python Version](https://img.shields.io/pypi/pyversions/ziphyr)
 
-Ziphyr is an on-the-fly zipcrypto archiving applied on a streamed file source.
+Ziphyr is an on-the-fly zipcrypto archiving applied on a streamed file source. Disclaimer: *the zip-native cryptography is unsecure*.
 
 ## Features
 
