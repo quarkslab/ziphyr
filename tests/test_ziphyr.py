@@ -74,6 +74,13 @@ class TestZiphyr(unittest.TestCase):
         self.assertEqual(z.zinfo.file_size, _filesize)
         self.assertEqual(z.zinfo.external_attr, 25165824)
 
+    def test_primeless(self):
+        """Test error when Ziphyr isn't primed."""
+        z = module.Ziphyr()
+        zg = z.generator(list())
+        with self.assertRaises(RuntimeError):
+            next(zg)
+
     def test_generator(self):
         """Test Ziphyr object's generator consumption."""
         z = module.Ziphyr(b'password')
@@ -82,8 +89,39 @@ class TestZiphyr(unittest.TestCase):
 
         self.assertEqual(next(zg)[:4], b'PK\x03\x04')
 
-    def test_zip_unzip(self):
-        """Test zipping with Ziphyr then unzipping with zipfile."""
+    def test_zip_unzip_passwordless(self):
+        """
+        Test zipping with Ziphyr (passwordless) then unzipping with zipfile.
+        """
+        with tempfile.TemporaryDirectory() as tmpdir:
+            test_fp = tmpdir+'/test.file'
+            test_zp = tmpdir+'/test.zip'
+
+            with open(test_fp, 'w') as f:
+                f.write(
+                    "I thought what I'd do was, I'd pretend I was one "
+                    "of those deaf-mutes. That way I wouldn't have to "
+                    "have any goddam stupid useless conversations with "
+                    "anybody."
+                )
+
+            z = module.Ziphyr()
+            z.from_filepath(test_fp)
+            source = file_iterable(test_fp)
+
+            with open(test_zp, 'ab') as f:
+                for chunk in z.generator(source):
+                    f.write(chunk)
+
+            with ZipFile(test_zp, 'r') as f:
+                test_rp = f.extract(test_fp[1:], tmpdir)
+
+            self.assertTrue(cmp(test_fp, test_rp))
+
+    def test_zip_unzip_encrypted(self):
+        """
+        Test zipping with Ziphyr (encrypted) then unzipping with zipfile.
+        """
         with tempfile.TemporaryDirectory() as tmpdir:
             test_fp = tmpdir+'/test.file'
             test_zp = tmpdir+'/test.zip'

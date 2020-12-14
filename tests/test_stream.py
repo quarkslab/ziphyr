@@ -43,3 +43,13 @@ class TestZiphyrStream(unittest.TestCase):
         self.assertEqual(stream.x, 3410687069)
         self.assertEqual(stream.y, 4199982011)
         self.assertEqual(stream.z, 3483152694)
+
+    def test_closed_error(self):
+        """Test the write error when closed."""
+        stream = module.ZiphyrStream()
+
+        stream.write(b'1')
+        stream.close()
+
+        with self.assertRaises(ValueError):
+            stream.write(b'2')
